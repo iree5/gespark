@@ -15,7 +15,7 @@ class _HomePageState extends State<HomePage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const RegistrationPage(title: 'Enregistrement'),
+        builder: (context) => const RegistrationPage(title: 'Inscription'),
       ),
     );
   }
@@ -66,7 +66,7 @@ class _HomePageState extends State<HomePage> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: onPressed1,
-                  child: const Text('Enregistrez-vous'),
+                  child: const Text('Inscrivez-vous'),
                 ),
               ),
             ),

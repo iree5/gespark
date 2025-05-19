@@ -19,8 +19,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
   final TextEditingController _cnibLieuController = TextEditingController();
   final TextEditingController _cnibDateController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
   DateTime? _selectedDate;
   bool isLoading = false;
+  bool _obscurePassword = true;
+  bool _obscureConfirmPassword = true;
 
   Future<void> onPressed1() async {
     if (_formKey.currentState!.validate()) {
@@ -40,6 +45,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
           //'cnib_date': _selectedDate != null ? _selectedDate!.toIso8601String() : '',
           'cnib_date': _cnibDateController.text,
           'cnib_lieu': _cnibLieuController.text,
+          'password': _passwordController.text,
         },
       );
 
@@ -211,6 +217,67 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   ),
 
                   SizedBox(height: 10),
+
+                  TextFormField(
+                    controller: _passwordController,
+                    decoration: InputDecoration(
+                      labelText: 'Mot de passe',
+                      hintText: 'Entrez un mot de passe',
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _obscurePassword
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _obscurePassword = !_obscurePassword;
+                          });
+                        },
+                      ),
+                    ),
+                    obscureText: !_obscurePassword,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
+                    },
+                  ),
+
+                  SizedBox(height: 10),
+
+                  TextFormField(
+                    controller: _confirmPasswordController,
+                    decoration: InputDecoration(
+                      labelText: 'Confirmer le mot de passe',
+                      hintText: 'Retapez le mot de passe',
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _obscureConfirmPassword
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _obscureConfirmPassword = !_obscureConfirmPassword;
+                          });
+                        },
+                      ),
+                    ),
+                    obscureText: !_obscureConfirmPassword,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Veuillez confirmer le mot de passe';
+                      }
+                      if (value != _passwordController.text) {
+                        return 'Les mots de passe ne correspondent pas';
+                      }
+                      return null;
+                    },
+                  ),
+
+                  const SizedBox(height: 20),
 
                   Container(
                     margin: const EdgeInsets.all(5),
